@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RT4Athletics — Roster Intelligence System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #1a2130;
+    --white: #f4f1eb;
+    --gold: #cd4f25;
+    --gold-dim: #8a3a1c;
+    --red: #c0392b;
+    --steel: #1a1a1a;
+    --mid: #2a2a2a;
+    --muted: #5a5a5a;
+    --line: rgba(205,79,37,0.15);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 60px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(26,33,48,0.9);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+  .nav-cta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* ── SECTIONS ── */
+  section { padding: 120px 60px; max-width: 1200px; margin: 0 auto; }
+  .full-bleed { max-width: none; }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 160px;
+    padding-bottom: 100px;
+    max-width: none;
+    padding-left: 60px;
+    padding-right: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 50% at 70% 50%, rgba(205,79,37,0.04) 0%, transparent 70%),
+      radial-gradient(ellipse 30% 40% at 20% 80%, rgba(192,57,43,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 10vw, 140px);
+    line-height: 0.92;
+    letter-spacing: 1px;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  .hero-headline em {
+    font-style: normal;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: rgba(244,241,235,0.6);
+    max-width: 520px;
+    margin-top: 32px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-actions {
+    display: flex; gap: 16px; align-items: center;
+    margin-top: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    padding: 16px 36px;
+    text-decoration: none;
+    display: inline-block;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--white);
+    border: 1px solid rgba(244,241,235,0.2);
+    padding: 16px 36px;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-moneyline {
+    position: absolute;
+    right: 60px; bottom: 80px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.2s forwards;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: var(--steel);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 40px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    max-width: none;
+    margin: 0;
+  }
+  .stat-item {
+    padding: 0 40px;
+    border-right: 1px solid var(--line);
+    text-align: left;
+  }
+  .stat-item:first-child { padding-left: 0; }
+  .stat-item:last-child { border-right: none; }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ── PROBLEM ── */
+  #problem {
+    padding: 140px 60px;
+    max-width: none;
+    background: var(--black);
+    position: relative;
+  }
+  #problem::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--red);
+    opacity: 0.5;
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+  }
+
+  .section-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    line-height: 1;
+    letter-spacing: 1px;
+    margin-bottom: 48px;
+    max-width: 800px;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    max-width: 900px;
+    margin-bottom: 60px;
+  }
+  .problem-item {
+    background: var(--black);
+    padding: 36px 40px;
+    position: relative;
+  }
+  .problem-item::before {
+    content: '—';
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--red);
+    display: block;
+    margin-bottom: 12px;
+  }
+  .problem-item p {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(244,241,235,0.7);
+    line-height: 1.5;
+  }
+
+  .kill-line {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    letter-spacing: 1px;
+    color: var(--white);
+    border-left: 3px solid var(--gold);
+    padding-left: 28px;
+    max-width: 800px;
+  }
+
+  /* ── SOLUTION ── */
+  #solution {
+    padding: 140px 60px;
+    max-width: none;
+    background: var(--steel);
+  }
+
+  .solution-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-bottom: 80px;
+  }
+
+  .solution-body {
+    font-size: 16px;
+    color: rgba(244,241,235,0.6);
+    line-height: 1.8;
+    margin-top: 32px;
+  }
+
+  .solution-modules {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .module-card {
+    background: var(--steel);
+    padding: 48px 40px;
+    transition: background 0.3s;
+  }
+  .module-card:hover { background: #222; }
+
+  .module-icon {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .module-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  .module-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(244,241,235,0.55);
+    line-height: 1.7;
+  }
+
+  /* ── DIFFERENTIATION ── */
+  #differentiation {
+    padding: 140px 60px;
+    max-width: none;
+    background: var(--black);
+  }
+
+  .diff-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-bottom: 80px;
+    align-items: end;
+  }
+
+  .diff-note {
+    font-size: 15px;
+    color: rgba(244,241,235,0.5);
+    line-height: 1.8;
+  }
+
+  .intelligence-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+
+  .intel-row {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 100px 1fr 120px;
+    align-items: center;
+    padding: 24px 36px;
+    gap: 32px;
+    transition: background 0.2s;
+  }
+  .intel-row:hover { background: #111; }
+
+  .intel-type {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .intel-type.risk { color: var(--red); }
+  .intel-type.value { color: var(--gold); }
+  .intel-type.signal { color: #5ab4ac; }
+
+  .intel-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(244,241,235,0.8);
+  }
+
+  .intel-score {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-align: right;
+  }
+  .intel-score.high { color: var(--red); }
+  .intel-score.med { color: var(--gold); }
+  .intel-score.low { color: #5ab4ac; }
+
+  /* ── SHOWCASE ── */
+  #showcase {
+    padding: 140px 60px;
+    max-width: none;
+    background: var(--steel);
+  }
+
+  .showcase-header {
+    margin-bottom: 60px;
+  }
+
+  .dashboard-mock {
+    background: #0f0f0f;
+    border: 1px solid var(--line);
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .dash-topbar {
+    background: #0a0a0a;
+    border-bottom: 1px solid var(--line);
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .dash-topbar-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .dash-live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .dash-live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #27ae60;
+    animation: pulse 2s infinite;
+  }
+
+  .dash-body {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    min-height: 400px;
+  }
+
+  .dash-sidebar {
+    border-right: 1px solid var(--line);
+    padding: 28px;
+  }
+
+  .dash-metric {
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .dash-metric:last-child { border-bottom: none; }
+  .dash-metric-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .dash-metric-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: var(--white);
+    line-height: 1;
+  }
+  .dash-metric-value.gold { color: var(--gold); }
+  .dash-metric-value.red { color: var(--red); }
+
+  .dash-main {
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .player-row {
+    display: grid;
+    grid-template-columns: 180px 80px 100px 80px 100px 1fr;
+    gap: 0;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .player-row.header {
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 4px;
+  }
+  .player-row.header span {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .player-row span:first-child { font-size: 13px; font-weight: 400; }
+  .player-row span {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(244,241,235,0.7);
+  }
+  .risk-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .risk-hi { background: rgba(192,57,43,0.2); color: var(--red); }
+  .risk-md { background: rgba(205,79,37,0.15); color: var(--gold); }
+  .risk-lo { background: rgba(90,180,172,0.15); color: #5ab4ac; }
+
+  /* ── AUDIENCE ── */
+  #audience {
+    padding: 140px 60px;
+    max-width: none;
+    background: var(--black);
+  }
+
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 60px;
+  }
+
+  .audience-card {
+    background: var(--black);
+    padding: 48px 40px;
+  }
+
+  .audience-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: rgba(205,79,37,0.15);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .audience-role {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+
+  .audience-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(244,241,235,0.5);
+    line-height: 1.7;
+  }
+
+  /* ── VALUE ── */
+  #value {
+    padding: 140px 60px;
+    max-width: none;
+    background: var(--steel);
+  }
+
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 60px;
+  }
+
+  .value-card {
+    background: var(--steel);
+    padding: 48px 40px;
+  }
+
+  .value-scenario {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .value-outcome {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .value-desc {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(244,241,235,0.55);
+    line-height: 1.6;
+  }
+
+  /* ── PRICING ── */
+  #pricing {
+    padding: 140px 60px;
+    max-width: none;
+    background: var(--black);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    margin-top: 60px;
+    max-width: 900px;
+  }
+
+  .pricing-card {
+    background: var(--black);
+    padding: 56px 52px;
+    position: relative;
+  }
+
+  .pricing-card.featured {
+    background: #111;
+    border-left: 3px solid var(--gold);
+  }
+
+  .pricing-tier {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .pricing-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .pricing-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .pricing-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+
+  .pricing-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .pricing-features li {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(244,241,235,0.65);
+    padding-left: 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .pricing-features li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    top: 2px;
+  }
+
+  .pricing-scarcity {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-top: 20px;
+  }
+
+  /* ── CTA ── */
+  #cta {
+    padding: 160px 60px;
+    max-width: none;
+    background: var(--steel);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(205,79,37,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .cta-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    max-width: 800px;
+    margin: 0 auto 24px;
+  }
+
+  .cta-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 48px;
+  }
+
+  .cta-actions {
+    display: flex; gap: 16px; align-items: center; justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .cta-note {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(244,241,235,0.3);
+    font-style: italic;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--line);
+    padding: 48px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: var(--gold);
+  }
+
+  .footer-tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-legal {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.15);
+  }
+
+  /* ── DIVIDERS ── */
+  .rule {
+    border: none;
+    border-top: 1px solid var(--line);
+    margin: 0;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Intersection observer targets */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── RESPONSIVE (basic) ── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    section, #hero, #problem, #solution, #differentiation, #showcase, #audience, #value, #pricing, #cta { padding-left: 24px; padding-right: 24px; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); padding: 28px 24px; }
+    .solution-intro, .diff-header { grid-template-columns: 1fr; gap: 40px; }
+    .solution-modules, .audience-grid, .value-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .intel-row { grid-template-columns: 1fr; gap: 8px; }
+    .dash-body { grid-template-columns: 1fr; }
+    .player-row { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">RT4Athletics</div>
+  <div class="nav-links">
+    <a href="#problem">Problem</a>
+    <a href="#solution">System</a>
+    <a href="#showcase">Intelligence</a>
+    <a href="#pricing">Access</a>
+  </div>
+  <a href="#cta" class="nav-cta">Request Access</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Roster Intelligence System</div>
+  <h1 class="hero-headline">Stop Guessing<br>Your Roster.<br><em>Start Controlling It.</em></h1>
+  <p class="hero-sub">AI-powered NIL valuation, transfer risk prediction, and roster intelligence for programs competing at the highest level.</p>
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">Request Access</a>
+    <a href="#showcase" class="btn-ghost">See Sample Report</a>
+  </div>
+  <div class="hero-moneyline">We tell you who to pay, who to play, and who will leave</div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-num">$4.6M</div>
+    <div class="stat-label">Avg team NIL value modeled</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-1">
+    <div class="stat-num">82%</div>
+    <div class="stat-label">Transfer risk precision</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-2">
+    <div class="stat-num">48hr</div>
+    <div class="stat-label">Full roster model delivery</div>
+  </div>
+  <div class="stat-item reveal reveal-delay-3">
+    <div class="stat-num">D1</div>
+    <div class="stat-label">Programs only</div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div id="problem" style="background:var(--black);position:relative;">
+<section style="padding:140px 0; max-width:none; position:relative;">
+<div style="padding:0 60px; max-width:1200px; margin:0 auto;">
+  <div class="section-tag reveal">The Problem</div>
+  <h2 class="section-headline reveal">Programs Are Flying Blind.</h2>
+  <div class="problem-grid reveal">
+    <div class="problem-item">
+      <p>Millions misallocated in NIL deals with no data behind the number.</p>
+    </div>
+    <div class="problem-item">
+      <p>Star players leaving with zero warning. The portal hits before the conversation does.</p>
+    </div>
+    <div class="problem-item">
+      <p>Coaches operating on instinct in a landscape that now requires intelligence.</p>
+    </div>
+    <div class="problem-item">
+      <p>Transfer portal chaos. Free agency dynamics with none of the infrastructure.</p>
+    </div>
+  </div>
+  <div class="kill-line reveal">
+    "Programs are making million-dollar decisions with zero intelligence infrastructure."
+  </div>
+</div>
+</section>
+</div>
+
+<!-- SOLUTION -->
+<div id="solution" style="background:var(--steel);">
+<section style="padding:140px 0; max-width:none;">
+<div style="padding:0 60px; max-width:1200px; margin:0 auto;">
+  <div class="solution-intro">
+    <div>
+      <div class="section-tag reveal">The System</div>
+      <h2 class="section-headline reveal">A Full Intelligence Layer For Your Roster.</h2>
+    </div>
+    <p class="solution-body reveal">RT4Athletics is not a dashboard. It is a decision infrastructure—built to process every signal that affects your roster and translate it into clear, actionable intelligence before your competitors can react.</p>
+  </div>
+  <div class="solution-modules">
+    <div class="module-card reveal">
+      <div class="module-icon">01 / NIL Engine</div>
+      <div class="module-title">NIL Valuation Engine</div>
+      <p class="module-desc">Know exactly what each player is worth—before you make an offer, before you renew, before you get outbid. No guesswork. Market-calibrated, program-specific values.</p>
+    </div>
+    <div class="module-card reveal reveal-delay-1">
+      <div class="module-icon">02 / Risk Detection</div>
+      <div class="module-title">Transfer Risk Detection</div>
+      <p class="module-desc">Identify who is likely to leave before they do. Behavioral signals, usage patterns, NIL alignment—combined into a single risk score updated continuously.</p>
+    </div>
+    <div class="module-card reveal reveal-delay-2">
+      <div class="module-icon">03 / Optimization</div>
+      <div class="module-title">Roster Optimization</div>
+      <p class="module-desc">Allocate minutes, money, and attention correctly. Surface mismatches between investment and output. Stop overpaying before it costs you a season.</p>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+
+<!-- DIFFERENTIATION -->
+<div id="differentiation" style="background:var(--black);">
+<section style="padding:140px 0; max-width:none;">
+<div style="padding:0 60px; max-width:1200px; margin:0 auto;">
+  <div class="diff-header">
+    <div>
+      <div class="section-tag reveal">What Makes Us Different</div>
+      <h2 class="section-headline reveal">Not Data.<br>Decisions.</h2>
+    </div>
+    <p class="diff-note reveal">Other tools show you numbers. RT4Athletics tells you what those numbers mean for your program—and what to do about them. Every output is a decision, not a metric.</p>
+  </div>
+  <div class="intelligence-feed reveal">
+    <div class="intel-row">
+      <span class="intel-type risk">Transfer Risk</span>
+      <span class="intel-text">High NIL allocation, declining usage → transfer probability increasing</span>
+      <span class="intel-score high">Risk: 87</span>
+    </div>
+    <div class="intel-row">
+      <span class="intel-type value">NIL Signal</span>
+      <span class="intel-text">Incoming freshman projects to displace current starter by Week 6</span>
+      <span class="intel-score med">Watch</span>
+    </div>
+    <div class="intel-row">
+      <span class="intel-type signal">Overpay Alert</span>
+      <span class="intel-text">Overpay risk detected in top 3 NIL earners — $180K above market rate</span>
+      <span class="intel-score high">−$180K</span>
+    </div>
+    <div class="intel-row">
+      <span class="intel-type signal">Opportunity</span>
+      <span class="intel-text">Undervalued portal target identified — projected value exceeds current ask by 3×</span>
+      <span class="intel-score low">+3× Value</span>
+    </div>
+    <div class="intel-row">
+      <span class="intel-type risk">Transfer Risk</span>
+      <span class="intel-text">Social engagement drop correlated with reduced playing time — intervention window open</span>
+      <span class="intel-score med">Risk: 61</span>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+
+<!-- SHOWCASE -->
+<div id="showcase" style="background:var(--steel);">
+<section style="padding:140px 0; max-width:none;">
+<div style="padding:0 60px; max-width:1200px; margin:0 auto;">
+  <div class="showcase-header">
+    <div class="section-tag reveal">Product Showcase</div>
+    <h2 class="section-headline reveal">Every Player.<br>Fully Modeled.</h2>
+  </div>
+  <div class="dashboard-mock reveal">
+    <div class="dash-topbar">
+      <span class="dash-topbar-title">RT4 Intelligence — Roster Overview</span>
+      <span class="dash-live"><span class="dash-live-dot"></span>Live Model</span>
+    </div>
+    <div class="dash-body">
+      <div class="dash-sidebar">
+        <div class="dash-metric">
+          <div class="dash-metric-label">Team NIL Value</div>
+          <div class="dash-metric-value gold">$4.58M</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-label">Avg Transfer Risk</div>
+          <div class="dash-metric-value red">72</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-label">Players Modeled</div>
+          <div class="dash-metric-value">24</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-label">Overpay Exposure</div>
+          <div class="dash-metric-value red">$340K</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-label">Model Updated</div>
+          <div class="dash-metric-value" style="font-size:18px;">4h ago</div>
+        </div>
+      </div>
+      <div class="dash-main">
+        <div class="player-row header">
+          <span>Player</span>
+          <span>NIL Value</span>
+          <span>Risk Score</span>
+          <span>Usage %</span>
+          <span>Signal</span>
+          <span></span>
+        </div>
+        <div class="player-row">
+          <span>J. Williams — WR</span>
+          <span style="color:var(--gold);">$420K</span>
+          <span style="color:var(--red);">87</span>
+          <span>61%</span>
+          <span><span class="risk-badge risk-hi">HIGH RISK</span></span>
+          <span></span>
+        </div>
+        <div class="player-row">
+          <span>M. Torres — QB</span>
+          <span style="color:var(--gold);">$610K</span>
+          <span style="color:var(--gold);">44</span>
+          <span>88%</span>
+          <span><span class="risk-badge risk-lo">STABLE</span></span>
+          <span></span>
+        </div>
+        <div class="player-row">
+          <span>D. Knox — LB</span>
+          <span style="color:var(--gold);">$190K</span>
+          <span style="color:var(--red);">79</span>
+          <span>52%</span>
+          <span><span class="risk-badge risk-hi">HIGH RISK</span></span>
+          <span></span>
+        </div>
+        <div class="player-row">
+          <span>R. Chen — CB</span>
+          <span style="color:var(--gold);">$280K</span>
+          <span style="color:var(--gold);">55</span>
+          <span>74%</span>
+          <span><span class="risk-badge risk-md">MONITOR</span></span>
+          <span></span>
+        </div>
+        <div class="player-row">
+          <span>T. Davis — RB</span>
+          <span style="color:var(--gold);">$350K</span>
+          <span style="color:#5ab4ac;">31</span>
+          <span>80%</span>
+          <span><span class="risk-badge risk-lo">STABLE</span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+
+<!-- AUDIENCE -->
+<div id="audience" style="background:var(--black);">
+<section style="padding:140px 0; max-width:none;">
+<div style="padding:0 60px; max-width:1200px; margin:0 auto;">
+  <div class="section-tag reveal">Built For</div>
+  <h2 class="section-headline reveal">Programs Competing<br>At The Highest Level.</h2>
+  <div class="audience-grid">
+    <div class="audience-card reveal">
+      <div class="audience-number">01</div>
+      <div class="audience-role">D1 Coaching Staffs</div>
+      <p class="audience-desc">Make roster decisions with full intelligence behind them. Know who to pay, who to play, and who's at risk—before the season turns.</p>
+    </div>
+    <div class="audience-card reveal reveal-delay-1">
+      <div class="audience-number">02</div>
+      <div class="audience-role">NIL Collectives</div>
+      <p class="audience-desc">Stop guessing market rates. Deploy capital with precision. Identify who drives real program value and where you're already overexposed.</p>
+    </div>
+    <div class="audience-card reveal reveal-delay-2">
+      <div class="audience-number">03</div>
+      <div class="audience-role">Recruiting & Personnel</div>
+      <p class="audience-desc">Surface undervalued portal targets. Model how incoming talent affects your current roster. Build rosters that compound over time.</p>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+
+<!-- VALUE -->
+<div id="value" style="background:var(--steel);">
+<section style="padding:140px 0; max-width:none;">
+<div style="padding:0 60px; max-width:1200px; margin:0 auto;">
+  <div class="section-tag reveal">Return On Intelligence</div>
+  <h2 class="section-headline reveal">One Decision<br>Pays For This.</h2>
+  <div class="value-grid">
+    <div class="value-card reveal">
+      <div class="value-scenario">Avoid Overpay</div>
+      <div class="value-outcome">$50K–$500K</div>
+      <p class="value-desc">Catch one misaligned NIL deal before it closes. That's the system paid back for years.</p>
+    </div>
+    <div class="value-card reveal reveal-delay-1">
+      <div class="value-scenario">Retain a Starter</div>
+      <div class="value-outcome">Season Impact</div>
+      <p class="value-desc">Identify risk early enough to intervene. Keep a key player. Change a season's trajectory.</p>
+    </div>
+    <div class="value-card reveal reveal-delay-2">
+      <div class="value-scenario">Portal Intelligence</div>
+      <div class="value-outcome">Competitive Edge</div>
+      <p class="value-desc">Find undervalued talent your competitors missed. Build a better roster with the same budget.</p>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" style="background:var(--black);">
+<section style="padding:140px 0; max-width:none;">
+<div style="padding:0 60px; max-width:1200px; margin:0 auto;">
+  <div class="section-tag reveal">Access Tiers</div>
+  <h2 class="section-headline reveal">Exclusive Program<br>Availability.</h2>
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="pricing-tier">Tier 01</div>
+      <div class="pricing-name">Division Package</div>
+      <div class="pricing-price">$2,500</div>
+      <div class="pricing-period">per month</div>
+      <ul class="pricing-features">
+        <li>Full team modeling — every player on your roster</li>
+        <li>NIL valuation updated continuously</li>
+        <li>Transfer risk scoring with alert thresholds</li>
+        <li>Ongoing model updates as data changes</li>
+        <li>48-hour onboarding and initial report</li>
+      </ul>
+      <a href="#cta" class="btn-ghost" style="display:inline-block;">Request Access</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-tier">Tier 02 — Full Access</div>
+      <div class="pricing-name">Full D1 Package</div>
+      <div class="pricing-price">$5,000</div>
+      <div class="pricing-period">per month</div>
+      <ul class="pricing-features">
+        <li>Everything in Division Package</li>
+        <li>Expanded player pool — portal targets + recruits</li>
+        <li>Advanced intelligence signals and pattern detection</li>
+        <li>Priority data access and model refresh</li>
+        <li>Deeper roster projection modeling</li>
+        <li>Dedicated analyst point of contact</li>
+      </ul>
+      <a href="#cta" class="btn-primary" style="display:inline-block;">Request Access</a>
+      <div class="pricing-scarcity" style="margin-top:24px;">Limited availability per conference</div>
+    </div>
+  </div>
+</div>
+</section>
+</div>
+
+<!-- CTA -->
+<div id="cta" style="background:var(--steel); text-align:center;">
+<section style="padding:160px 0; max-width:none;">
+<div style="padding:0 60px; max-width:900px; margin:0 auto; text-align:center;">
+  <div class="cta-tag reveal">Get Started</div>
+  <h2 class="cta-headline reveal">Get Your Program's<br>Intelligence Layer.</h2>
+  <p class="cta-sub reveal">We'll model your team before the call.</p>
+  <div class="cta-actions reveal">
+    <a href="mailto:access@rt4athletics.com" class="btn-primary">Request Access</a>
+    <a href="mailto:reports@rt4athletics.com" class="btn-ghost">Get Sample Report</a>
+  </div>
+  <p class="cta-note reveal">We tell you who to pay, who to play, and who will leave.</p>
+</div>
+</section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">RT4Athletics</div>
+  <div class="footer-tagline">Roster Intelligence System</div>
+  <div class="footer-legal">© 2025 RT4Athletics. All rights reserved.</div>
+</footer>
+
+<script>
+  // Intersection Observer for scroll reveals
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  // Smooth number counter animation for stats
+  function animateCounter(el, target, prefix = '', suffix = '') {
+    const duration = 1200;
+    const start = performance.now();
+    const isFloat = target.toString().includes('.');
+    
+    function update(time) {
+      const elapsed = time - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = isFloat 
+        ? (eased * parseFloat(target)).toFixed(2)
+        : Math.round(eased * parseInt(target));
+      el.textContent = prefix + current + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+</script>
+</body>
+</html>
