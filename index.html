@@ -466,6 +466,28 @@
     background: #27ae60;
     animation: pulse 2s infinite;
   }
+  .dash-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .dash-action-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--gold);
+    border: 1px solid rgba(205,79,37,0.35);
+    padding: 8px 12px;
+    cursor: default;
+    user-select: none;
+  }
+  .dash-action-btn.secondary {
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(244,241,235,0.18);
+  }
 
   .dash-body {
     display: grid;
@@ -507,6 +529,54 @@
     flex-direction: column;
     gap: 1px;
   }
+  .roster-table {
+    border: 1px solid var(--line);
+    background: rgba(255,255,255,0.02);
+    overflow-x: auto;
+  }
+  .roster-table table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1500px;
+  }
+  .roster-table thead th {
+    position: sticky;
+    top: 0;
+    background: rgba(10,10,10,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+    text-align: left;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .roster-table tbody td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(244,241,235,0.72);
+    white-space: nowrap;
+  }
+  .roster-table tbody tr:hover td {
+    background: rgba(255,255,255,0.02);
+  }
+  .roster-table a {
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .roster-table a:hover {
+    opacity: 0.85;
+    text-decoration: underline;
+  }
+  .cell-strong { color: rgba(244,241,235,0.92); font-weight: 500; }
+  .cell-gold { color: var(--gold); }
+  .cell-red { color: var(--red); }
+  .cell-muted { color: rgba(244,241,235,0.45); }
 
   .player-row {
     display: grid;
@@ -1030,25 +1100,20 @@
   <div class="dashboard-mock reveal">
     <div class="dash-topbar">
       <span class="dash-topbar-title">RT4 Intelligence — Roster Overview</span>
-      <span class="dash-live"><span class="dash-live-dot"></span>Live Model</span>
+      <div class="dash-actions">
+        <span class="dash-live"><span class="dash-live-dot"></span>Live Model</span>
+        <span class="dash-action-btn secondary">Run Instagram scrape</span>
+      </div>
     </div>
     <div class="dash-body">
       <div class="dash-sidebar">
         <div class="dash-metric">
-          <div class="dash-metric-label">Team NIL Value</div>
-          <div class="dash-metric-value gold">$4.58M</div>
+          <div class="dash-metric-label">Total estimated NIL team value</div>
+          <div class="dash-metric-value gold">$4,581,893</div>
         </div>
         <div class="dash-metric">
-          <div class="dash-metric-label">Avg Transfer Risk</div>
-          <div class="dash-metric-value red">72</div>
-        </div>
-        <div class="dash-metric">
-          <div class="dash-metric-label">Players Modeled</div>
-          <div class="dash-metric-value">24</div>
-        </div>
-        <div class="dash-metric">
-          <div class="dash-metric-label">Overpay Exposure</div>
-          <div class="dash-metric-value red">$340K</div>
+          <div class="dash-metric-label">Players</div>
+          <div class="dash-metric-value">16</div>
         </div>
         <div class="dash-metric">
           <div class="dash-metric-label">Model Updated</div>
@@ -1056,53 +1121,134 @@
         </div>
       </div>
       <div class="dash-main">
-        <div class="player-row header">
-          <span>Player</span>
-          <span>NIL Value</span>
-          <span>Risk Score</span>
-          <span>Usage %</span>
-          <span>Signal</span>
-          <span></span>
-        </div>
-        <div class="player-row">
-          <span>J. Williams — WR</span>
-          <span style="color:var(--gold);">$420K</span>
-          <span style="color:var(--red);">87</span>
-          <span>61%</span>
-          <span><span class="risk-badge risk-hi">HIGH RISK</span></span>
-          <span></span>
-        </div>
-        <div class="player-row">
-          <span>M. Torres — QB</span>
-          <span style="color:var(--gold);">$610K</span>
-          <span style="color:var(--gold);">44</span>
-          <span>88%</span>
-          <span><span class="risk-badge risk-lo">STABLE</span></span>
-          <span></span>
-        </div>
-        <div class="player-row">
-          <span>D. Knox — LB</span>
-          <span style="color:var(--gold);">$190K</span>
-          <span style="color:var(--red);">79</span>
-          <span>52%</span>
-          <span><span class="risk-badge risk-hi">HIGH RISK</span></span>
-          <span></span>
-        </div>
-        <div class="player-row">
-          <span>R. Chen — CB</span>
-          <span style="color:var(--gold);">$280K</span>
-          <span style="color:var(--gold);">55</span>
-          <span>74%</span>
-          <span><span class="risk-badge risk-md">MONITOR</span></span>
-          <span></span>
-        </div>
-        <div class="player-row">
-          <span>T. Davis — RB</span>
-          <span style="color:var(--gold);">$350K</span>
-          <span style="color:#5ab4ac;">31</span>
-          <span>80%</span>
-          <span><span class="risk-badge risk-lo">STABLE</span></span>
-          <span></span>
+        <div class="roster-table">
+          <table>
+            <thead>
+              <tr>
+                <th>Player Name</th>
+                <th>Number</th>
+                <th>Position</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Class Year</th>
+                <th>Birthplace</th>
+                <th>ESPN Performance Trend</th>
+                <th>ESPN Vs Team Scoring</th>
+                <th>ESPN Minutes Vs Team</th>
+                <th>Instagram Profile Url</th>
+                <th>Instagram Match Tier</th>
+                <th>Instagram Followers</th>
+                <th>NIL Value Estimate</th>
+                <th>Data Confidence</th>
+                <th>Intel Usage Gap</th>
+                <th>Intel Stagnation Score</th>
+                <th>Intel Bench Pressure Score</th>
+                <th>Intel Newcomer Displacement Risk</th>
+                <th>Intel Portal Risk Score</th>
+                <th>Intel Multi Year Stay Likelihood</th>
+                <th>Intel Remaining Eligibility Years</th>
+                <th>Intel Transfer Precedent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="cell-strong">Luka Bogavac</td><td>44</td><td>G</td><td>6' 6"</td><td>215 lbs</td><td>FR</td><td>Mojkovac, Montenegro</td>
+                <td>first_season</td><td>above_team_avg</td><td>high</td>
+                <td><a href="https://www.instagram.com/luka_b4_/" target="_blank" rel="noreferrer">instagram</a></td><td class="cell-muted">—</td><td>8,684</td>
+                <td class="cell-gold">155,651</td><td>high</td><td>-63.6</td><td>38</td><td>12.5</td><td>44.4</td><td class="cell-red">78.5</td><td>21.5</td><td>4</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">James Brown</td><td>2</td><td>F</td><td>6' 10"</td><td>240 lbs</td><td>SO</td><td>Aurora, IL</td>
+                <td>stable</td><td>below_team_avg</td><td>medium</td>
+                <td><a href="https://www.instagram.com/jamesbrown.13/" target="_blank" rel="noreferrer">instagram</a></td><td>auto</td><td>13,000</td>
+                <td class="cell-gold">193,472</td><td>high</td><td>-13.3</td><td>48</td><td>75</td><td>80</td><td>50</td><td>46.8</td><td>3</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Elijah Davis</td><td>6</td><td>G</td><td>6' 3"</td><td>205 lbs</td><td>SR</td><td>Chapel Hill, NC</td>
+                <td>stable</td><td>below_team_avg</td><td>low</td>
+                <td><a href="https://www.instagram.com/_elijahdavis_/" target="_blank" rel="noreferrer">instagram</a></td><td>auto</td><td>11,000</td>
+                <td class="cell-gold">148,460</td><td>high</td><td>10.9</td><td>48</td><td>87.5</td><td>44.4</td><td>21.2</td><td>49.6</td><td>1</td><td>1</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Isaiah Denis</td><td>5</td><td>G</td><td>6' 4"</td><td>180 lbs</td><td>FR</td><td>Charlotte, NC</td>
+                <td>first_season</td><td>below_team_avg</td><td>low</td>
+                <td><a href="https://www.instagram.com/zay_denny/" target="_blank" rel="noreferrer">instagram</a></td><td>review</td><td>14,000</td>
+                <td class="cell-gold">180,923</td><td>high</td><td>29.1</td><td>38</td><td>75</td><td>44.4</td><td>58.5</td><td>41.5</td><td>4</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Derek Dixon</td><td>3</td><td>G</td><td>6' 5"</td><td>200 lbs</td><td>FR</td><td>Vienna, VA</td>
+                <td>first_season</td><td>above_team_avg</td><td>high</td>
+                <td><a href="https://www.instagram.com/thederekdixon/" target="_blank" rel="noreferrer">instagram</a></td><td>auto</td><td>17,000</td>
+                <td class="cell-gold">270,005</td><td>high</td><td>-13.9</td><td>38</td><td>25</td><td>44.4</td><td class="cell-red">75.4</td><td>24.6</td><td>4</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Kyan Evans</td><td>0</td><td>G</td><td>6' 2"</td><td>175 lbs</td><td>JR</td><td>Kansas City, MO</td>
+                <td>declining</td><td>below_team_avg</td><td>medium</td>
+                <td><a href="https://www.instagram.com/kyan.evans/" target="_blank" rel="noreferrer">instagram</a></td><td>auto</td><td>18,000</td>
+                <td class="cell-gold">252,644</td><td>high</td><td>15.9</td><td>82</td><td>37.5</td><td>44.4</td><td>47.2</td><td>46.4</td><td>2</td><td>1</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Zayden High</td><td>1</td><td>F</td><td>6' 10"</td><td>230 lbs</td><td>SO</td><td>San Antonio, TX</td>
+                <td>improving</td><td>below_team_avg</td><td>medium</td>
+                <td><a href="https://www.instagram.com/zaydenhigh/" target="_blank" rel="noreferrer">instagram</a></td><td class="cell-muted">—</td><td>13,000</td>
+                <td class="cell-gold">193,472</td><td>high</td><td>-13.3</td><td>18</td><td>50</td><td>80</td><td>63</td><td>33</td><td>3</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">John Holbrook</td><td>25</td><td>F</td><td>6' 8"</td><td>230 lbs</td><td>SO</td><td>Hickory, NC</td>
+                <td>declining</td><td>below_team_avg</td><td>low</td>
+                <td><a href="https://www.instagram.com/_johnholbrook_/" target="_blank" rel="noreferrer">instagram</a></td><td>auto</td><td>6,374</td>
+                <td class="cell-gold">94,904</td><td>high</td><td>-0.2</td><td>82</td><td>100</td><td>80</td><td>36.2</td><td>61.5</td><td>3</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Ivan Matlekovic</td><td>40</td><td>C</td><td>7' 0"</td><td>255 lbs</td><td>SO</td><td>Sisak, Croatia</td>
+                <td>declining</td><td>below_team_avg</td><td>low</td>
+                <td><a href="https://www.instagram.com/ivan.matlekovic/" target="_blank" rel="noreferrer">instagram</a></td><td>auto</td><td>1,259</td>
+                <td class="cell-gold">25,101</td><td>high</td><td>-10.7</td><td>82</td><td>100</td><td>50</td><td>36.8</td><td>60.8</td><td>3</td><td>1</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Jonathan Powell</td><td>11</td><td>G</td><td>6' 6"</td><td>190 lbs</td><td>SO</td><td>Centerville, OH</td>
+                <td>declining</td><td>below_team_avg</td><td>medium</td>
+                <td><a href="https://www.instagram.com/uknowjp/" target="_blank" rel="noreferrer">instagram</a></td><td>review</td><td>19,000</td>
+                <td class="cell-gold">264,097</td><td>high</td><td>30.3</td><td>82</td><td>50</td><td>44.4</td><td>45.4</td><td>51.7</td><td>3</td><td>1</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Evan Smith</td><td>32</td><td>G</td><td>6' 1"</td><td>195 lbs</td><td>JR</td><td>Charlotte, NC</td>
+                <td>first_season</td><td>below_team_avg</td><td>low</td>
+                <td><a href="https://www.instagram.com/_evansmithh_/" target="_blank" rel="noreferrer">instagram</a></td><td class="cell-muted">—</td><td class="cell-muted">—</td>
+                <td class="cell-gold">12,550</td><td>high</td><td>-14</td><td>38</td><td>100</td><td>44.4</td><td>49.8</td><td>43.4</td><td>2</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Jarin Stevenson</td><td>15</td><td>F</td><td>6' 10"</td><td>215 lbs</td><td>JR</td><td>Chapel Hill, NC</td>
+                <td>improving</td><td>above_team_avg</td><td>high</td>
+                <td><a href="https://www.instagram.com/jarinstevenson/" target="_blank" rel="noreferrer">instagram</a></td><td>auto</td><td>14,000</td>
+                <td class="cell-gold">230,265</td><td>high</td><td>-34.9</td><td>18</td><td>25</td><td>80</td><td>59.8</td><td>32</td><td>2</td><td>1</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Seth Trimble</td><td>7</td><td>G</td><td>6' 3"</td><td>200 lbs</td><td>SR</td><td>Menomonee Falls, WI</td>
+                <td>improving</td><td>above_team_avg</td><td>high</td>
+                <td><a href="https://www.instagram.com/sethtrim/" target="_blank" rel="noreferrer">instagram</a></td><td>review</td><td>74,000</td>
+                <td class="cell-gold">901,930</td><td>high</td><td>4.8</td><td>18</td><td>0</td><td>44.4</td><td>36.1</td><td>14.1</td><td>1</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Henri Veesaar</td><td>13</td><td>C</td><td>7' 0"</td><td>225 lbs</td><td>JR</td><td>Tallin, Estonia</td>
+                <td>improving</td><td>above_team_avg</td><td>high</td>
+                <td><a href="https://www.instagram.com/mrhenriveesaar/" target="_blank" rel="noreferrer">instagram</a></td><td class="cell-muted">—</td><td class="cell-muted">—</td>
+                <td class="cell-gold">37,652</td><td>high</td><td>-74.7</td><td>18</td><td>0</td><td>50</td><td class="cell-red">70.6</td><td>19.8</td><td>2</td><td>1</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Caleb Wilson</td><td>8</td><td>F</td><td>6' 10"</td><td>215 lbs</td><td>FR</td><td>Atlanta, GA</td>
+                <td>first_season</td><td>above_team_avg</td><td>high</td>
+                <td><a href="https://www.instagram.com/c.dubbb/" target="_blank" rel="noreferrer">instagram</a></td><td>review</td><td>123,000</td>
+                <td class="cell-gold">1,368,123</td><td>high</td><td>12</td><td>38</td><td>0</td><td>80</td><td class="cell-red">72.7</td><td>27.3</td><td>4</td><td>0</td>
+              </tr>
+              <tr>
+                <td class="cell-strong">Jaydon Young</td><td>4</td><td>G</td><td>6' 4"</td><td>200 lbs</td><td>JR</td><td>Goldsboro, NC</td>
+                <td>declining</td><td>below_team_avg</td><td>medium</td>
+                <td><a href="https://www.instagram.com/jaaaydonn3/" target="_blank" rel="noreferrer">instagram</a></td><td>review</td><td>18,000</td>
+                <td class="cell-gold">252,644</td><td>high</td><td>15.9</td><td>82</td><td>62.5</td><td>44.4</td><td>41.7</td><td>52.6</td><td>2</td><td>1</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
