@@ -1,0 +1,12 @@
+{
+  "name": "rt4athletics-website",
+  "private": true,
+  "description": "Public marketing site for RT4Athletics",
+  "scripts": {
+    "media:capture": "node scripts/capture-product-media.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0",
+    "sharp": "^0.34.0"
+  }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+    Reusable Insights article structure.
+    Fill the article: block, then title / date / description / body / screenshot / CTA.
+    Do not publish this template URL as a live note.
+
+    article:
+      title:
+      date: YYYY-MM-DD
+      description:
+      screenshot: /assets/product/{school}/{surface}.webp
+      school:
+      cta: insights-demo
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} — RT4Athletics Insights</title>
+  <meta name="description" content="{{description}}">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://rt4athletics.com/insights/{{slug}}.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="RT4Athletics">
+  <meta property="og:title" content="{{title}}">
+  <meta property="og:description" content="{{description}}">
+  <meta property="og:url" content="https://rt4athletics.com/insights/{{slug}}.html">
+  <meta property="og:image" content="https://rt4athletics.com{{screenshot}}">
+  <meta property="article:published_time" content="{{date}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{title}}">
+  <meta name="twitter:description" content="{{description}}">
+  <meta name="twitter:image" content="https://rt4athletics.com{{screenshot}}">
+  <link rel="icon" type="image/png" href="../favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <link rel="stylesheet" href="../assets/css/insights.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <a class="nav-brand" href="../">
+      <img class="nav-mark" src="../assets/brand/rt4athletics.png" width="28" height="28" alt="">
+      <span class="nav-wordmark">
+        <span class="nav-logo">RT4Athletics</span>
+        <span class="nav-byline">RT Engine by Solis Consulting</span>
+      </span>
+    </a>
+    <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="site-nav-links">Menu</button>
+    <div class="nav-links" id="site-nav-links" data-nav-links>
+      <a href="../#product">Product</a>
+      <a href="../#surfaces">Surfaces</a>
+      <a href="../#programs">Programs</a>
+      <a href="./">Insights</a>
+      <a href="mailto:access@rt4athletics.com" class="nav-cta" id="cta-nav-demo" data-cta="nav-demo">Request Access</a>
+    </div>
+  </nav>
+
+  <article class="insight-wrap">
+    <p class="insight-kicker">Insights</p>
+    <h1 class="insight-title">{{title}}</h1>
+    <p class="insight-deck">{{description}}</p>
+    <p class="insight-meta"><time datetime="{{date}}">{{display_date}}</time> · Product note</p>
+
+    <figure class="shot-frame">
+      <img src="{{screenshot}}" width="1440" height="900" alt="{{screenshot_alt}}">
+      <figcaption class="shot-caption">Illustrative program view. Not a customer, partner, or endorsement.</figcaption>
+    </figure>
+
+    <div class="insight-body" style="margin-top:48px">
+      <p>{{body}}</p>
+    </div>
+
+    <div class="insight-cta">
+      <p>Want this on your roster? Walkthroughs are scheduled.</p>
+      <a href="mailto:access@rt4athletics.com" class="btn-primary" id="cta-insights-demo" data-cta="insights-demo">Request a walkthrough</a>
+    </div>
+  </article>
+
+  <footer class="site-footer">
+    <div class="footer-left">
+      <a class="footer-logo" href="../">
+        <img class="brand-mark" src="../assets/brand/rt4athletics.png" width="28" height="28" alt="">
+        <span class="footer-wordmark">
+          <span class="footer-logo-name">RT4Athletics</span>
+          <span class="footer-byline">RT Engine by Solis Consulting</span>
+        </span>
+      </a>
+      <div class="footer-tagline">Roster intelligence for college football</div>
+    </div>
+    <a class="footer-parent" href="https://solisconsultinggroup.com/" target="_blank" rel="noopener noreferrer">
+      <img class="brand-mark brand-mark--solis" src="../assets/brand/solis-consulting.png" width="22" height="22" alt="">
+      <span>Solis Consulting</span>
+    </a>
+    <div class="footer-legal">© 2026 RT4Athletics. All rights reserved.</div>
+  </footer>
+  <script src="../assets/js/site.js"></script>
+</body>
+</html>

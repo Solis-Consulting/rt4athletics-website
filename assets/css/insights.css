@@ -1,0 +1,124 @@
+.insight-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 140px 48px 100px;
+}
+
+.insight-index {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 140px 48px 100px;
+}
+
+.insight-kicker {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.insight-title {
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 650;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: var(--bright);
+  margin-bottom: 16px;
+}
+
+.insight-deck {
+  font-size: 19px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.insight-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 40px;
+}
+
+.insight-body {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.insight-body p + p {
+  margin-top: 20px;
+}
+
+.insight-body h2 {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin: 40px 0 12px;
+  color: var(--bright);
+}
+
+.insight-cta {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.insight-cta p {
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.article-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.article-list a {
+  display: block;
+  background: var(--panel-data);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 26px 28px;
+  text-decoration: none;
+  backdrop-filter: blur(12px) saturate(1.2);
+}
+
+.article-list a:hover {
+  border-color: var(--border-strong);
+}
+
+.article-list time {
+  display: block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.article-list h2 {
+  font-size: 24px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--bright);
+  margin-bottom: 8px;
+}
+
+.article-list p {
+  color: var(--muted);
+}
+
+@media (max-width: 900px) {
+  .insight-wrap,
+  .insight-index {
+    padding: 120px 20px 72px;
+  }
+}

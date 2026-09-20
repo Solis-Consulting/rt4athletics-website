@@ -1,0 +1,6 @@
+node_modules/
+playwright-report/
+test-results/
+.DS_Store
+assets/product/unc/
+assets/product/featured/unc-*.webp
