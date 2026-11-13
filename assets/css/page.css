@@ -81,9 +81,9 @@
 
 .tour-ring {
   position: absolute;
-  left: 22px;
-  width: 204px;
-  height: 42px;
+  left: 12px;
+  width: 223px;
+  height: 41px;
   border-radius: 10px;
   border: 1px solid rgba(78, 179, 255, 0.85);
   box-shadow: 0 0 0 6px rgba(78, 179, 255, 0.18);

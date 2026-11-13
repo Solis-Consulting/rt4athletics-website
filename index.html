@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis11">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis12">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -144,9 +144,9 @@
     (function () {
       var tour = document.getElementById("tour");
       var steps = [
-        { top: 188, kicker: "01 · Decision Center", title: "Roster decisions", lead: "Build the right roster.", body: "Identify positional needs, evaluate your current players, and decide who to retain, replace, or pursue." },
-        { top: 232, kicker: "02 · Market Context", title: "Valuation decisions", lead: "Know what athletes are worth.", body: "Compare athletes against conference peers to inform fair NIL and transfer valuations." },
-        { top: 276, kicker: "03 · Scenario Lab", title: "Investment decisions", lead: "Make every dollar count.", body: "Model roster changes, compare spending scenarios, and allocate limited resources." }
+        { view: "decisions", top: 172, kicker: "01 · Decision Center", title: "Roster decisions", lead: "Build the right roster.", body: "Identify positional needs, evaluate your current players, and decide who to retain, replace, or pursue." },
+        { view: "market", top: 216, kicker: "02 · Market Context", title: "Valuation decisions", lead: "Know what athletes are worth.", body: "Compare athletes against conference peers to inform fair NIL and transfer valuations." },
+        { view: "lab", top: 261, kicker: "03 · Scenario Lab", title: "Investment decisions", lead: "Make every dollar count.", body: "Model roster changes, compare spending scenarios, and allocate limited resources." }
       ];
       var step = 0;
       var open = document.getElementById("tour-open");
@@ -166,13 +166,19 @@
         document.getElementById("tour-lead").textContent = item.lead;
         document.getElementById("tour-body").textContent = item.body;
         document.getElementById("tour-card").style.top = (item.top - 8) + "px";
+        var frame = document.getElementById("solis");
+        if (frame) {
+          var next = frame.src.replace(/#.*$/, "") + "#/" + item.view;
+          if (frame.src !== next) frame.src = next;
+        }
       }
       function closeTour() {
         if (!tour) return;
         tour.classList.add("is-gone");
         tour.addEventListener("transitionend", function () { tour.remove(); }, { once: true });
       }
-      document.getElementById("tour-demo").addEventListener("click", function () {
+      document.getElementById("tour-demo").addEventListener("click", function (event) {
+        event.stopPropagation();
         step = 0;
         showStep();
       });
