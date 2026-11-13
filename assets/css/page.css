@@ -51,16 +51,46 @@
   background: transparent;
 }
 
-.tour-line {
-  font-size: clamp(40px, 5.4vw, 68px);
-  font-weight: 650;
-  letter-spacing: -0.035em;
+.tour-lockup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
 }
 
 .tour-mark {
-  width: 132px;
-  height: 132px;
+  width: 84px;
+  height: 84px;
   object-fit: contain;
+  transform: scale(0);
+  animation: tour-pop 0.55s cubic-bezier(0.2, 1.35, 0.4, 1) 0.2s forwards;
+}
+
+.tour-words {
+  opacity: 0;
+  transform: translateX(-10px);
+  animation: tour-words 0.5s ease 0.75s forwards;
+}
+
+.tour-name {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.tour-byline {
+  margin-top: 4px;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: rgba(238, 244, 251, 0.72);
+}
+
+.tour-line {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 560;
+  letter-spacing: -0.01em;
 }
 
 .tour-demo {
@@ -73,6 +103,25 @@
   font-weight: 600;
   background: #eef4fb;
   color: #061018;
+  animation: tour-btn 0.55s ease 1.35s forwards;
+}
+
+@keyframes tour-pop {
+  to { transform: scale(1); }
+}
+
+@keyframes tour-words {
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes tour-btn {
+  to { background: #4eb3ff; color: #061018; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-mark { transform: none; animation: none; }
+  .tour-words { opacity: 1; transform: none; animation: none; }
+  .tour-demo { background: #4eb3ff; animation: none; }
 }
 
 .tour.is-clear {
