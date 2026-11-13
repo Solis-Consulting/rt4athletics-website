@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis4">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis5">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -43,6 +43,7 @@
       title="Solis University Decision Center"
       src="https://rt4athletics-crm-production.up.railway.app/p4/index.html?home=solis#/decisions"
     ></iframe>
+    <button type="button" class="glass-start" id="glass-start">Fair valuations for athletes.</button>
   </section>
 
   <section class="hero-frame" id="frame">
@@ -137,6 +138,13 @@
 
   <script>
     (function () {
+      var glass = document.getElementById("glass-start");
+      if (glass) {
+        glass.addEventListener("click", function () {
+          glass.classList.add("is-gone");
+          glass.addEventListener("transitionend", function () { glass.remove(); }, { once: true });
+        });
+      }
       var host = location.hostname;
       if (!host || host === "localhost" || host === "127.0.0.1") {
         var frame = document.getElementById("solis");
