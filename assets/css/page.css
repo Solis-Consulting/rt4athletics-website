@@ -42,16 +42,31 @@
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 0;
-  cursor: pointer;
+  gap: 28px;
   color: var(--bright);
   font-family: var(--font);
+  background: transparent;
+}
+
+.tour-line {
   font-size: clamp(40px, 5.4vw, 68px);
   font-weight: 650;
   letter-spacing: -0.035em;
-  background: transparent;
+}
+
+.tour-demo {
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  background: #eef4fb;
+  color: #061018;
 }
 
 .tour.is-clear {
@@ -61,20 +76,6 @@
 }
 
 .tour-open[hidden] { display: none; }
-
-.tour-open.is-demo {
-  inset: auto;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  padding: 12px 22px;
-  border-radius: 999px;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0;
-  background: #eef4fb;
-  color: #061018;
-}
 .tour-step { position: absolute; inset: 0; }
 .tour-step[hidden] { display: none; }
 

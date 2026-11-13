@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis10">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis11">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -33,7 +33,10 @@
       src="https://rt4athletics-crm-production.up.railway.app/p4/index.html?home=solis#/decisions"
     ></iframe>
     <div class="tour" id="tour">
-      <button type="button" class="tour-open" id="tour-open">Fair valuations for athletes.</button>
+      <div class="tour-open" id="tour-open">
+        <p class="tour-line">Fair valuations for athletes.</p>
+        <button type="button" class="tour-demo" id="tour-demo">Access live demo</button>
+      </div>
       <div class="tour-step" id="tour-step" hidden>
         <span class="tour-ring" id="tour-ring" aria-hidden="true"></span>
         <article class="tour-card" id="tour-card">
@@ -169,12 +172,7 @@
         tour.classList.add("is-gone");
         tour.addEventListener("transitionend", function () { tour.remove(); }, { once: true });
       }
-      open.addEventListener("click", function () {
-        if (!open.classList.contains("is-demo")) {
-          open.textContent = "Access live demo";
-          open.classList.add("is-demo");
-          return;
-        }
+      document.getElementById("tour-demo").addEventListener("click", function () {
         step = 0;
         showStep();
       });
