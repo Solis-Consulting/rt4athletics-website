@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis12">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis13">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -35,6 +35,7 @@
     <div class="tour" id="tour">
       <div class="tour-open" id="tour-open">
         <p class="tour-line">Fair valuations for athletes.</p>
+        <img class="tour-mark" src="assets/brand/rt4athletics.png" width="72" height="72" alt="RT4Athletics">
         <button type="button" class="tour-demo" id="tour-demo">Access live demo</button>
       </div>
       <div class="tour-step" id="tour-step" hidden>
@@ -51,7 +52,13 @@
   </section>
 
   <section class="hero-frame" id="frame">
-    <h1 class="hero-headline">Roster intelligence for college football + basketball.</h1>
+    <h1 class="slogan" id="slogan">
+      <span class="slogan-line is-on">Fair valuations for athletes.</span>
+      <span class="slogan-line">Build the right roster.</span>
+      <span class="slogan-line">Make every dollar count.</span>
+      <span class="slogan-line">Find your next difference-maker.</span>
+      <span class="slogan-line">Know before you commit.</span>
+    </h1>
   </section>
 
   <div class="logo-string" id="logos" aria-label="School marks">
@@ -189,6 +196,29 @@
         if (step >= steps.length) closeTour();
         else showStep();
       });
+      var slogan = document.getElementById("slogan");
+      if (slogan && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var lines = slogan.querySelectorAll(".slogan-line");
+        var sloganIndex = 0;
+        var sloganTimer = null;
+        function showSlogan(next) {
+          lines[sloganIndex].classList.remove("is-on");
+          sloganIndex = next;
+          lines[sloganIndex].classList.add("is-on");
+        }
+        function startSlogan() {
+          if (sloganTimer) return;
+          sloganTimer = setInterval(function () {
+            showSlogan((sloganIndex + 1) % lines.length);
+          }, 3500);
+        }
+        slogan.addEventListener("mouseenter", function () {
+          clearInterval(sloganTimer);
+          sloganTimer = null;
+        });
+        slogan.addEventListener("mouseleave", startSlogan);
+        startSlogan();
+      }
       var host = location.hostname;
       if (!host || host === "localhost" || host === "127.0.0.1") {
         var frame = document.getElementById("solis");

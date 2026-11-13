@@ -57,6 +57,13 @@
   letter-spacing: -0.035em;
 }
 
+.tour-mark {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  object-fit: cover;
+}
+
 .tour-demo {
   border: 0;
   cursor: pointer;
@@ -221,10 +228,30 @@
   padding: 88px 48px 28px;
 }
 
-.hero-frame .hero-headline {
+.slogan {
+  display: grid;
+  justify-items: center;
+  width: min(16em, 100%);
+  margin: 0;
   text-align: center;
-  max-width: 14em;
+  font-family: var(--font);
   font-size: clamp(36px, 5vw, 64px);
+  font-weight: 650;
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #f08a2a;
+}
+
+.slogan-line {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.slogan-line.is-on { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  .slogan-line { transition: none; }
 }
 
 .logo-string {
