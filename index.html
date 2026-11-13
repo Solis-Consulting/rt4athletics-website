@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis5">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis6">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -43,7 +43,24 @@
       title="Solis University Decision Center"
       src="https://rt4athletics-crm-production.up.railway.app/p4/index.html?home=solis#/decisions"
     ></iframe>
-    <button type="button" class="glass-start" id="glass-start">Fair valuations for athletes.</button>
+    <div class="tour" id="tour">
+      <p class="tour-foot">Fair valuations for athletes.</p>
+      <button type="button" class="tour-open" id="tour-open">Access live demo</button>
+      <div class="tour-step" id="tour-step" hidden>
+        <span class="tour-ring" id="tour-ring" aria-hidden="true"></span>
+        <article class="tour-card" id="tour-card">
+          <span class="tour-arrow" aria-hidden="true"></span>
+          <p class="tour-kicker" id="tour-kicker"></p>
+          <h2 id="tour-title"></h2>
+          <p class="tour-lead" id="tour-lead"></p>
+          <p id="tour-body"></p>
+        </article>
+        <div class="tour-actions">
+          <button type="button" class="tour-skip" id="tour-skip">Click to skip</button>
+          <button type="button" class="tour-full" id="tour-full">Full access</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="hero-frame" id="frame">
@@ -138,13 +155,41 @@
 
   <script>
     (function () {
-      var glass = document.getElementById("glass-start");
-      if (glass) {
-        glass.addEventListener("click", function () {
-          glass.classList.add("is-gone");
-          glass.addEventListener("transitionend", function () { glass.remove(); }, { once: true });
-        });
+      var tour = document.getElementById("tour");
+      var steps = [
+        { top: 188, kicker: "01 · Decision Center", title: "Roster decisions", lead: "Build the right roster.", body: "Identify positional needs, evaluate your current players, and decide who to retain, replace, or pursue." },
+        { top: 232, kicker: "02 · Market Context", title: "Valuation decisions", lead: "Know what athletes are worth.", body: "Compare athletes against conference peers to inform fair NIL and transfer valuations." },
+        { top: 276, kicker: "03 · Scenario Lab", title: "Investment decisions", lead: "Make every dollar count.", body: "Model roster changes, compare spending scenarios, and allocate limited resources." }
+      ];
+      var step = 0;
+      function showStep() {
+        var item = steps[step];
+        document.getElementById("tour-open").hidden = true;
+        var panel = document.getElementById("tour-step");
+        panel.hidden = false;
+        var ring = document.getElementById("tour-ring");
+        ring.style.top = item.top + "px";
+        ring.style.animation = "none";
+        void ring.offsetWidth;
+        ring.style.animation = "";
+        document.getElementById("tour-kicker").textContent = item.kicker;
+        document.getElementById("tour-title").textContent = item.title;
+        document.getElementById("tour-lead").textContent = item.lead;
+        document.getElementById("tour-body").textContent = item.body;
+        document.getElementById("tour-card").style.top = (item.top - 8) + "px";
       }
+      function closeTour() {
+        if (!tour) return;
+        tour.classList.add("is-gone");
+        tour.addEventListener("transitionend", function () { tour.remove(); }, { once: true });
+      }
+      document.getElementById("tour-open").addEventListener("click", function () { step = 0; showStep(); });
+      document.getElementById("tour-skip").addEventListener("click", function () {
+        step += 1;
+        if (step >= steps.length) closeTour();
+        else showStep();
+      });
+      document.getElementById("tour-full").addEventListener("click", closeTour);
       var host = location.hostname;
       if (!host || host === "localhost" || host === "127.0.0.1") {
         var frame = document.getElementById("solis");
