@@ -58,13 +58,9 @@
 }
 
 .tour-mark {
-  width: 88px;
-  height: 88px;
-  padding: 12px;
-  border-radius: 22px;
-  background: #eef4fb;
+  width: 132px;
+  height: 132px;
   object-fit: contain;
-  box-sizing: border-box;
 }
 
 .tour-demo {
@@ -247,6 +243,7 @@
 
 .slogan-line {
   grid-area: 1 / 1;
+  color: #f08a2a;
   opacity: 0;
   transition: opacity 0.7s ease;
 }
