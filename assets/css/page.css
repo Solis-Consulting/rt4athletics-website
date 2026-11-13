@@ -58,10 +58,13 @@
 }
 
 .tour-mark {
-  width: 72px;
-  height: 72px;
-  border-radius: 16px;
-  object-fit: cover;
+  width: 88px;
+  height: 88px;
+  padding: 12px;
+  border-radius: 22px;
+  background: #eef4fb;
+  object-fit: contain;
+  box-sizing: border-box;
 }
 
 .tour-demo {
