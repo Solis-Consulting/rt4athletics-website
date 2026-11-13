@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis8">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis9">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -43,10 +43,6 @@
           <p class="tour-lead" id="tour-lead"></p>
           <p id="tour-body"></p>
         </article>
-        <div class="tour-actions">
-          <button type="button" class="tour-skip" id="tour-skip">Click to skip</button>
-          <button type="button" class="tour-full" id="tour-full">Full access</button>
-        </div>
       </div>
     </div>
   </section>
@@ -181,12 +177,13 @@
         step = 0;
         showStep();
       });
-      document.getElementById("tour-skip").addEventListener("click", function () {
+      tour.addEventListener("click", function (event) {
+        if (!tour.classList.contains("is-clear")) return;
+        if (event.target.closest(".tour-card")) return;
         step += 1;
         if (step >= steps.length) closeTour();
         else showStep();
       });
-      document.getElementById("tour-full").addEventListener("click", closeTour);
       var host = location.hostname;
       if (!host || host === "localhost" || host === "127.0.0.1") {
         var frame = document.getElementById("solis");
