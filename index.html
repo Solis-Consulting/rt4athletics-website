@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis6">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis7">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -44,8 +44,7 @@
       src="https://rt4athletics-crm-production.up.railway.app/p4/index.html?home=solis#/decisions"
     ></iframe>
     <div class="tour" id="tour">
-      <p class="tour-foot">Fair valuations for athletes.</p>
-      <button type="button" class="tour-open" id="tour-open">Access live demo</button>
+      <button type="button" class="tour-open" id="tour-open">Fair valuations for athletes.</button>
       <div class="tour-step" id="tour-step" hidden>
         <span class="tour-ring" id="tour-ring" aria-hidden="true"></span>
         <article class="tour-card" id="tour-card">
@@ -162,9 +161,11 @@
         { top: 276, kicker: "03 · Scenario Lab", title: "Investment decisions", lead: "Make every dollar count.", body: "Model roster changes, compare spending scenarios, and allocate limited resources." }
       ];
       var step = 0;
+      var open = document.getElementById("tour-open");
       function showStep() {
         var item = steps[step];
-        document.getElementById("tour-open").hidden = true;
+        open.hidden = true;
+        tour.classList.add("is-clear");
         var panel = document.getElementById("tour-step");
         panel.hidden = false;
         var ring = document.getElementById("tour-ring");
@@ -183,7 +184,14 @@
         tour.classList.add("is-gone");
         tour.addEventListener("transitionend", function () { tour.remove(); }, { once: true });
       }
-      document.getElementById("tour-open").addEventListener("click", function () { step = 0; showStep(); });
+      open.addEventListener("click", function () {
+        if (open.textContent.indexOf("Access live demo") === -1) {
+          open.textContent = "Access live demo";
+          return;
+        }
+        step = 0;
+        showStep();
+      });
       document.getElementById("tour-skip").addEventListener("click", function () {
         step += 1;
         if (step >= steps.length) closeTour();

@@ -53,6 +53,7 @@
   -webkit-backdrop-filter: blur(16px) saturate(1.25);
 }
 
+.tour.is-clear { background: transparent; }
 .tour-step { position: absolute; inset: 0; }
 .tour-step[hidden] { display: none; }
 
