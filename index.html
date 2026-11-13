@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis17">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis18">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -37,9 +37,9 @@
         <div class="tour-lockup">
           <img class="tour-mark" src="assets/brand/rt4athletics.png" width="84" height="84" alt="">
           <div class="tour-words">
-            <p class="tour-name">RT4Athletics</p>
+            <p class="tour-name" id="tour-name">RT4Athletics</p>
             <p class="tour-byline">RT Engine by Solis Consulting</p>
-            <p class="tour-line">Roster intelligence for college football and basketball.</p>
+            <p class="tour-line">Fair valuations for athletes.</p>
           </div>
         </div>
         <button type="button" class="tour-demo" id="tour-demo">Access live demo</button>
@@ -190,6 +190,17 @@
         if (!tour) return;
         tour.classList.add("is-gone");
         tour.addEventListener("transitionend", function () { tour.remove(); }, { once: true });
+      }
+      var typed = document.getElementById("tour-name");
+      if (typed && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        var full = typed.textContent;
+        var count = 0;
+        typed.textContent = "";
+        setTimeout(function tick() {
+          count += 1;
+          typed.textContent = full.slice(0, count);
+          if (count < full.length) setTimeout(tick, 100);
+        }, 1200);
       }
       document.getElementById("tour-demo").addEventListener("click", function (event) {
         event.stopPropagation();
