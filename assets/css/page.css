@@ -308,6 +308,15 @@
   padding: 8px 0 12px;
 }
 
+.logo-note {
+  margin: 0;
+  padding: 0 48px 8px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+}
+
 .logo-string:hover .logo-track {
   animation-play-state: paused;
 }
