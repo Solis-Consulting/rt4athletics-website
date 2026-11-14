@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis20">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis21">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -21,13 +21,21 @@
         <label>Name<input name="name" required autocomplete="name"></label>
         <label>Email<input name="email" type="email" required autocomplete="email"></label>
         <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
-        <label>Power 4 program
-          <select name="p4" required>
+        <label>School
+          <input name="school" required autocomplete="off" placeholder="Search the Power 4">
+          <ul class="access-hits" hidden></ul>
+        </label>
+        <label>Division
+          <select name="division" required>
             <option value="">Select</option>
-            <option value="yes">Yes</option>
-            <option value="no">No</option>
+            <option value="D1">D1</option>
+            <option value="D2">D2</option>
+            <option value="D3">D3</option>
           </select>
         </label>
+        <input type="hidden" name="p4" value="">
+        <input type="hidden" name="schoolId" value="">
+        <input type="hidden" name="conference" value="">
         <label>What do you want
           <select name="intent">
             <option value="walkthrough">A walkthrough</option>
@@ -40,6 +48,6 @@
       <p class="access-done" hidden>Saved. We’ll be in touch.</p>
     </form>
   </main>
-  <script src="assets/js/access.js?v=1"></script>
+  <script src="assets/js/access.js?v=2"></script>
 </body>
 </html>

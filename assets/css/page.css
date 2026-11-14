@@ -423,12 +423,37 @@
 }
 
 .access-fields label {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 6px;
   font-size: 13px;
   color: rgba(238, 244, 251, 0.72);
 }
+
+.access-hits {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 4px;
+  border-radius: 10px;
+  background: rgba(6, 16, 28, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.access-hits button {
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  color: var(--bright);
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.access-hits button:hover { background: rgba(78, 179, 255, 0.16); }
 
 .access-fields input,
 .access-fields select {
