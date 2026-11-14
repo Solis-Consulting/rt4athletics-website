@@ -44,10 +44,10 @@
   const ctaType = function (el) {
     const name = (el.getAttribute("data-cta") || "").toLowerCase();
     const href = (el.getAttribute("href") || "").toLowerCase();
-    if (name === "sample-report" || href.indexOf("sample%20report") !== -1 || href.indexOf("sample report") !== -1) {
+    if (name === "sample" || name === "sample-report" || href.indexOf("sample%20report") !== -1 || href.indexOf("sample report") !== -1) {
       return "sample";
     }
-    if (name.indexOf("insight") !== -1) return "walkthrough";
+    if (name === "product-demo" || name === "walkthrough" || name.indexOf("insight") !== -1) return "walkthrough";
     if (href.indexOf("mailto:access@rt4athletics.com") === 0) return "walkthrough";
     return name || "other";
   };

@@ -387,6 +387,113 @@
   justify-content: center;
 }
 
+.access-glass {
+  max-width: 440px;
+  margin: 28px auto 0;
+  padding: 28px 24px 24px;
+  text-align: left;
+  border-radius: 20px;
+  color: var(--bright);
+  background: rgba(8, 20, 34, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(18px) saturate(1.3);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3);
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.access-glass[hidden] { display: none; }
+
+.access-glass.is-open {
+  animation: access-in 0.45s ease forwards;
+}
+
+.access-intent {
+  margin: 0 0 16px;
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+}
+
+.access-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.access-fields label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(238, 244, 251, 0.72);
+}
+
+.access-fields input,
+.access-fields select {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  background: rgba(6, 16, 28, 0.55);
+  color: var(--bright);
+  font: inherit;
+  font-size: 15px;
+  padding: 10px 12px;
+}
+
+.access-submit {
+  margin-top: 4px;
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  background: #ffffff;
+  color: #061018;
+  animation: access-btn 0.7s ease 0.15s forwards;
+}
+
+.access-submit:disabled { opacity: 0.7; cursor: default; }
+
+.access-error { margin: 0; color: #ff8a8a; font-size: 13px; }
+
+.access-done {
+  margin: 8px 0 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+@keyframes access-in {
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes access-btn {
+  to { background: #4eb3ff; color: #ffffff; box-shadow: 0 0 22px rgba(78, 179, 255, 0.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .access-glass.is-open { animation: none; opacity: 1; transform: none; }
+  .access-submit { animation: none; background: #4eb3ff; color: #ffffff; }
+}
+
+.access-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+}
+
+.access-home {
+  margin-bottom: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: minmax(280px, 0.92fr) minmax(340px, 1.18fr);

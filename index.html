@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/site.css?v=brand2">
-  <link rel="stylesheet" href="assets/css/page.css?v=solis19">
+  <link rel="stylesheet" href="assets/css/page.css?v=solis20">
   <script src="assets/js/analytics.js"></script>
 </head>
 <body>
@@ -131,9 +131,28 @@
 
   <div id="cta" class="band">
     <div class="cta-actions">
-      <a href="mailto:access@rt4athletics.com" class="btn-primary" id="cta-product-demo" data-cta="product-demo">Request a walkthrough</a>
-      <a href="mailto:access@rt4athletics.com?subject=RT4Athletics%20sample%20report" class="btn-ghost" id="cta-sample-report" data-cta="sample-report">Ask for a sample</a>
+      <button type="button" class="btn-primary" id="cta-product-demo" data-cta="product-demo" data-open-access data-intent="walkthrough">Request a walkthrough</button>
+      <button type="button" class="btn-ghost" id="cta-sample-report" data-cta="sample-report" data-open-access data-intent="sample">Ask for a sample</button>
     </div>
+    <form class="access-glass" id="access-form" hidden>
+      <p class="access-intent">Request a walkthrough</p>
+      <div class="access-fields">
+        <label>Name<input name="name" required autocomplete="name"></label>
+        <label>Email<input name="email" type="email" required autocomplete="email"></label>
+        <label>Phone<input name="phone" type="tel" autocomplete="tel"></label>
+        <label>Power 4 program
+          <select name="p4" required>
+            <option value="">Select</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </label>
+        <input type="hidden" name="intent" value="walkthrough">
+        <p class="access-error" hidden>Could not save that. Try again.</p>
+        <button type="submit" class="access-submit">Send</button>
+      </div>
+      <p class="access-done" hidden>Saved. We’ll be in touch.</p>
+    </form>
   </div>
 
   <footer class="site-footer">
@@ -244,6 +263,7 @@
       }
     })();
   </script>
+  <script src="assets/js/access.js?v=1"></script>
   <script src="assets/js/site.js?v=brand2"></script>
 </body>
 </html>
