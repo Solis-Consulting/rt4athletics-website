@@ -29,10 +29,10 @@
   <section id="hero" class="hero-live">
     <iframe
       id="solis"
-      title="Solis University Decision Center"
-      src="https://rt4athletics-crm-production.up.railway.app/p4/index.html?home=solis&bust=40#/decisions"
+      title="UNC Football Decision Center"
+      src="https://rt4athletics-production.up.railway.app/rt4athletics_v4_dashboard.html"
     ></iframe>
-    <div class="tour" id="tour">
+    <div class="tour" id="tour" hidden>
       <div class="tour-open" id="tour-open">
         <div class="tour-lockup">
           <img class="tour-mark" src="assets/brand/rt4athletics.png" width="84" height="84" alt="">
@@ -267,7 +267,7 @@
       var host = location.hostname;
       if (!host || host === "localhost" || host === "127.0.0.1") {
         var frame = document.getElementById("solis");
-        if (frame) frame.src = "http://127.0.0.1:8771/p4/index.html?home=solis#/decisions";
+        if (frame) frame.src = "http://127.0.0.1:8771/p4/index.html?home=unc#/decisions";
       }
     })();
   </script>
